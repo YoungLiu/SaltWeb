@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.36-34.1, for Linux (x86_64)
 --
--- Host: localhost    Database: saltadmin
+-- Host: localhost    Database: saltweb
 -- ------------------------------------------------------
 -- Server version	5.5.36-34.1-log
 

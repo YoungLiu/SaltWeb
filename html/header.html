@@ -2,7 +2,7 @@
 	<header id="top">
 		<div class="wrapper">
 			<!-- Title/Logo - can use text instead of image -->
-			<div id="title"><img src="/static/images/logo.png" alt="SaltStack Admin" title="SaltStack Admin Beta&#10;Powered by Luxiaok" style="cursor:pointer" /><!--<span>Administry</span> demo--></div>
+			<div id="title"><img src="/static/images/logo.png" alt="SaltStack Admin" title="SaltStack Web Beta&#10;Powered by YoungLiu" style="cursor:pointer" /></div>
 			<!-- Top navigation -->
 			<div id="topnav">
 				<a href="/users/edit?id=${uid}"><img class="avatar" src="/static/images/user_32.png" alt="${ShowName}" title="${ShowName}"/></a>
@@ -12,7 +12,7 @@
 				<small>您有<a href="#" class="high"><b>3</b>条信息</a></small>
 			</div>
 			<!-- End of Top navigation -->
-			
+
 			<!-- Main navigation -->
 <%
 # 高亮当前导航菜单的判断
@@ -22,44 +22,20 @@ def curMenu(curM,curName):
     else:
         return 'class=""'
 %>
-<nav id="menu">	
+<nav id="menu">
     <ul class="sf-menu">
         <li ${curMenu(curM,'dashboard')}><a href="/dashboard">控制中心</a></li>
-        <li ${curMenu(curM,'hosts')}><a href="/hosts">主机</a>
+        <li ${curMenu(curM,'hosts')}><a href="/hosts">消息总线</a>
             <ul>
-                <li class="secondMenu"><a href="/hosts">主机管理</a></li>
-                <li class="secondMenu"><a href="/hosts/add">添加主机</a></li>
-	              <li class="secondMenu"><a href="/hosts/redis">Redis管理</a>
-	                 <ul>
-	                    <li><a href="/hosts/redis">Redis实例管理</a></li>
-	                    <li><a href="/hosts/redis/add">添加Redis实例</a></li>
-	                 </ul>
-	              </li>
-		            <li class="secondMenu"><a href="/hosts/mysql">MySQL管理</a>
-	                 <ul>
-	                    <li><a href="/hosts/mysql">MySQL实例管理</a></li>
-	                    <li><a href="/hosts/mysql/add">添加MySQL实例</a></li>
-	                 </ul>
-	              </li> 
+                <li class="secondMenu"><a href="/hosts">Device实例</a></li>
+                <li class="secondMenu"><a href="/hosts/add">添加Device</a></li>
+                <li class="secondMenu"><a href="/hosts/delete">删除Device</a></li>
             </ul>
-        </li> 
-        <li ${curMenu(curM,'project')}><a href="/project">项目</a>
-            <ul>
-                <li><a href="/project">项目管理</a></li>
-                <li><a href="/project/add">添加项目</a></li>
-            </ul>
-		    </li>		
+        </li>
         <li ${curMenu(curM,'users')}><a href="/users">用户</a>
             <ul>
                 <li><a href="/users">用户管理</a></li>
                 <li><a href="/users/add">添加用户</a></li>
-            </ul>
-        </li>
-        <li ${curMenu(curM,'admin')}><a href="/admin/config">管理</a>
-            <ul>
-                <li><a href="/admin/system">系统管理</a></li>
-                <li><a href="/admin/options">选项管理</a></li>
-                <li><a href="/hosts">资产管理</a></li>
             </ul>
         </li>
         <li  ${curMenu(curM,'monitor')}><a href="/monitor/redis">监控</a>
@@ -67,7 +43,7 @@ def curMenu(curM,curName):
                 <li><a href="/monitor/redis">Redis监控</a></li>
                 <li><a href="/monitor/mysql">MySQL监控</a></li>
                 <li><a href="/monitor/traffic">网络流量</a></li>
-                <li><a href="#">Zabbix API</a></li>
+                <li><a href="#">BUS API</a></li>
             </ul>
         </li>
         <li ${curMenu(curM,'salt')}><a href="/salt">SaltStack</a>
@@ -88,15 +64,6 @@ def curMenu(curM,curName):
                 <li><a href="/salt/release">发布管理</a></li>
             </ul>
         </li>
-        <li ${curMenu(curM,'report')}><a href="/report/fault">报告</a>
-            <ul>
-                <li><a href="/report/fault">故障上报</a></li>
-                <li><a href="/report/topo">拓扑文档</a></li>
-                <li><a href="/report/wiki">项目维基</a></li>
-                <li><a href="/report/norm">规范文档</a></li>      
-            </ul>
-        </li>
-        <li ${curMenu(curM,'cloud')}><a href="#">企业云</a></li>
         <li ${curMenu(curM,'test')}><a href="/test">测试页面</a></li>
     </ul>
 </nav>

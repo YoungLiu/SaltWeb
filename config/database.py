@@ -4,7 +4,7 @@
 dbType = 'mysql'
 dbHost = 'localhost'
 dbPort = 3306
-dbName = 'saltadmin'
+dbName = 'saltweb'
 dbUser = 'root'
 dbPass = '123456'
 dbChar = 'utf8'
