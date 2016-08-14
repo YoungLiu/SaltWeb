@@ -2,9 +2,9 @@
 <html lang="zh">
 <head>
 <meta charset="utf-8" />
-<title>SaltStack Admin - 主机管理 - 添加主机</title>
-<meta name="description" content="Luxiaok" />
-<meta name="keywords" content="Luxiaok" />
+<title>SaltStack Web - 总线管理 - 添加Device</title>
+<meta name="description" content="YoungLiu" />
+<meta name="keywords" content="YoungLiu" />
 <!-- We need to emulate IE7 only when we are to use excanvas -->
 <!--[if IE]>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
@@ -40,7 +40,7 @@ Could be loaded remotely from Google CDN :
 	<!-- Page title -->
 	<div id="pagetitle">
 		<div class="wrapper">
-			<h1>添加主机</h1>
+			<h1>添加Device</h1>
 			<!-- Quick search box -->
 			<form action="" method="get"><input class="" type="text" id="q" name="q" /></form>
 		</div>
@@ -56,13 +56,13 @@ Could be loaded remotely from Google CDN :
 <table class="maintable">
   <tr>
       <input type="text" name="id" id="id" class="maininput" value="none" style="display:none"/>
-      <td class="textLeft">主机名</td>
+      <td class="textLeft">Device名</td>
       <td class="inputRight"><input type="text" name="hostname" id="hostname" class="maininput"/></td>
       <td class="textLeft">待定功能</td>
       <td class="inputRight"><input type="text" name="dpt" class="maininput" /></td>
   </tr>
   <tr>
-      <td class="textLeft">域名</td>
+      <td class="textLeft">宿主机</td>
       <td class="inputRight"><input type="text" name="domain" class="maininput" /></td>
       <td class="textLeft">型号</td>
       <td class="inputRight"><select name="model" id="model" class="selectmenu">
@@ -165,9 +165,9 @@ Could be loaded remotely from Google CDN :
       </select>
       <input type="text" name="priip2" />
       </td>
-      <td class="textLeft">机柜编码</td>
+      <td class="textLeft">网段</td>
       <td class="inputRight"><select name="idctag" id="idctag" class="selectmenu">
-	    <option value=""  selected="selected">-- 选择机柜 --</option>
+	    <option value=""  selected="selected">-- 选择网段 --</option>
         % for x in SD['idctag']:
           <option value="${x['id']}">${x['value']}</option>
         % endfor
