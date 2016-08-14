@@ -16,7 +16,7 @@ def getOptions():
     #print sd
     return sd
 
-# 主机管理
+# device管理
 class Index:
     def GET(self):
         if getLogin():
@@ -55,7 +55,7 @@ class Index:
             web.setcookie('HTTP_REFERER', web.ctx.fullpath, 86400)
             return web.seeother("/login")
 
-# 添加主机
+# 添加device
 class Add:
     @Check_Login
     def GET(self):

@@ -2,9 +2,9 @@
 <html lang="zh">
 <head>
 <meta charset="utf-8" />
-<title>SaltStack Admin - 主机管理</title>
-<meta name="description" content="Luxiaok" />
-<meta name="keywords" content="Luxiaok" />
+<title>SaltStack Admin - 总线管理</title>
+<meta name="description" content="YoungLiu" />
+<meta name="keywords" content="YoungLiu" />
 <!-- We need to emulate IE7 only when we are to use excanvas -->
 <!--[if IE]>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
@@ -28,7 +28,7 @@ Could be loaded remotely from Google CDN :
 <!-- Superfish Navigation -->
 <script type="text/javascript" src="/static/js/jquery.superfish.min.js"></script>
 <script type="text/javascript" src="/static/js/jquery.supersubs.min.js"></script>
-<!-- 删除主机确认函数 -->
+<!-- 删除device确认函数 -->
 <script type="text/javascript" src="/static/js/hosts.js"></script>
 <!-- 顶部导航和底部隐藏的导航的特效输出 -->
 <script type="text/javascript" src="/static/js/nav.show.menu.js"></script>
@@ -40,7 +40,7 @@ Could be loaded remotely from Google CDN :
 	<!-- Page title -->
 	<div id="pagetitle">
 		<div class="wrapper">
-			<h1>主机管理</h1>
+			<h1>总线管理</h1>
 			<!-- Quick search box -->
 			<form action="" method="get"><input class="" type="text" id="q" name="q" /></form>
 		</div>
@@ -54,19 +54,13 @@ Could be loaded remotely from Google CDN :
 	      <div>
 		  <table width=100%>
 		  <tr>
-			  <td><h3>主机列表</h3></td>
-			  <td align='left'>按主机角色显示：<select name="show4role" id="show4role" class="" onchange="onSearch('show4role',7)">
+			  <td><h3>Device列表</h3></td>
+			  <td align='left'>按Device角色显示：<select name="show4role" id="show4role" class="" onchange="onSearch('show4role',7)">
                       <option value=""  selected="selected">所有角色</option>
                       % for x in sortShow['role']:
                       <option value="${x['value']}">${x['value']}</option>
                       % endfor
                  </select>
-                  　　按IDC机房显示：<select name="show4idc" id="show4idc" class="" onchange="onSearch('show4idc',6)">
-                      <option value=""  selected="selected">所有IDC</option>
-                      % for x in sortShow['idc']:
-                      <option value="${x['value']}">${x['value']}</option>
-                      % endfor
-                 </select>                
                   　　显示行数：<select name="showline" id="showline" class="">
                       <option value="all"  selected="selected">所有行</option>
                       <option value="line10">10 行</option>
@@ -77,20 +71,16 @@ Could be loaded remotely from Google CDN :
                       <option value="line500">500行</option>
                   </select>			
 			  </td>
-              <td align='right'><a href="/hosts/add" class="btn"><span class="icon icon-add">&nbsp;</span>添加主机</a></td>
+              <td align='right'><a href="/hosts/add" class="btn"><span class="icon icon-add">&nbsp;</span>添加Device</a></td>
           </tr>
           </table>					
 					<table class="datalist" id="datalist">
 						<thead>
 						    <tr>
-							<th>ID</th>
-							<th>主机名</th>
-							<th title="试试将鼠标放在有&#13;下划线的内网IP上&#13;可查看公网IP">内网IP</th>
-							##<th>公网IP</th>
-							<th>硬盘</th>
-							<th>内存</th>
-							<th>操作系统</th>
-							<th>IDC归属</th>
+							<th>DeviceID</th>
+							<th>宿主主机</th>
+							<th>内网IP</th>
+							<th>公网IP</th>
 							<th>角色</th>
 							<th>类型</th>
 							<th>型号</th>
@@ -141,14 +131,10 @@ Could be loaded remotely from Google CDN :
 						</tbody>
 						<tfoot>
 							<tr>
-							<th>ID</th>
-							<th>主机名</th>
+							<th>DeviceID</th>
+							<th>所在主机</th>
 							<th>内网IP</th>
-							##<th>公网IP</th>
-							<th>硬盘</th>
-							<th>内存</th>
-							<th>操作系统</th>
-							<th>IDC归属</th>
+							<th>公网IP</th>
 							<th>角色</th>
 							<th>类型</th>
 							<th>型号</th>
