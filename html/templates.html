@@ -3,7 +3,7 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8"/>
-    <title>SaltStack Admin - 服务管理</title>
+    <title>SaltStack Admin - 模板管理</title>
     <meta name="description" content="YoungLiu"/>
     <meta name="keywords" content="YoungLiu"/>
     <!-- We need to emulate IE7 only when we are to use excanvas -->
@@ -20,17 +20,19 @@
     <link rel="stylesheet" href="/static/css/custom.css" type="text/css"/>
     <!-- 用户列表css样式 -->
     <link rel="stylesheet" href="/static/css/tables.css" type="text/css"/>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <!-- jQuery with plugins -->
-    <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.js"></script>
     <!--
     Could be loaded remotely from Google CDN :
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     -->
     <!-- Superfish Navigation -->
-    <script type="text/javascript" src="/static/js/jquery.superfish.min.js"></script>
+    <script type="text/javascript" src="/static/js/superfish.min.js"></script>
     <script type="text/javascript" src="/static/js/jquery.supersubs.min.js"></script>
     <!-- 删除device确认函数 -->
-    <script type="text/javascript" src="/static/js/hosts.js"></script>
+    <script type="text/javascript" src="/static/js/template.js"></script>
     <!-- 顶部导航和底部隐藏的导航的特效输出 -->
     <script type="text/javascript" src="/static/js/nav.show.menu.js"></script>
 </head>
@@ -55,61 +57,40 @@
         <div>
             <table width=100%>
                 <tr>
-                    <td><h3>Device列表</h3></td>
-                    <td align='left'>按DeviceType显示：<select name="show4role" id="show4role" class=""
-                                                           onchange="onSearch('show4role',2)">
-                        <option value="" selected="selected">所有类型</option>
-                        % for x in sortShow['type']:
-                        <option value="${x['value']}">${x['value']}</option>
-                        % endfor
-                    </select>
-                    </td>
-                    <td align='right'><a href="/hosts/add" class="btn"><span class="icon icon-add">&nbsp;</span>添加Device</a>
+                    <td><h3>Template列表</h3></td>
+                    <td align='right'><a href="/template/add" class="btn"><span class="icon icon-add">&nbsp;</span>添加模板</a>
                     </td>
                 </tr>
             </table>
             <table class="datalist" id="datalist">
                 <thead>
                 <tr>
-                    <th>DeviceID</th>
-                    <th>DeviceName</th>
-                    <th>DeviceType</th>
-                    <th>HostIP</th>
-                    <th>DeviceStatus</th>
-                    <th>StartTime</th>
+                    <th>TemplateName</th>
+                    <th>TemplateContent</th>
                     <th>Options</th>
                 </tr>
                 </thead>
                 <tbody>
-                % for i in getHosts:
+                % for i in getTemplates:
                 <%
-                deviceid = i.id
-                devicename = i.devicename
-                devicetype = i.devicetype
-                hostip = i.hostip
-                status = i.status
-                startdate = i.startdate
+                templatename = i
+                templatecontent = getTemplates[i]
+                templatecontent = templatecontent.replace('\r\n', ' ')
+                templatecontent = templatecontent.replace('\n', ' ')
                 %>
                 <tr class="dataline">
-                    <td>${deviceid}</td>
-                    <td>${devicename}</td>
-                    <td>${devicetype}</td>
-                    <td>${hostip}</td>
-                    <td>${status}</td>
-                    <td>${startdate}</td>
-                    <td><a href="/hosts/del?pid=${deviceid}" onClick="return isDel()">删除</a> | <a
-                            href="/hosts/edit?pid=${deviceid}">编辑</a> | <a href="/hosts/admin?pid=${deviceid}">管理</a></td>
+                    <td>${templatename}</td>
+                    <td>${templatecontent}</td>
+                    <td><a href="/template/edit?pid=${templatename}">部署</a> |
+                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal" onclick="editTemplate('${templatename}','${templatecontent}')">编辑</button>
+                    </td>
                 </tr>
                 % endfor
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th>DeviceID</th>
-                    <th>DeviceName</th>
-                    <th>DeviceType</th>
-                    <th>HostIP</th>
-                    <th>DeviceStatus</th>
-                    <th>StartTime</th>
+                    <th>TemplateName</th>
+                    <th>TemplateContent</th>
                     <th>Options</th>
                 </tr>
                 </tfoot>
@@ -117,6 +98,30 @@
         </div>
     </div>
     <!-- End of Wrapper -->
+</div>
+
+<!-- edit template模态框（Modal） -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+     aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="button" class="btn btn-primary" id="editModalLabel">
+                </input>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="10" id="editModalContent" name="editModalContent"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="addTemplate()">
+                    提交更改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
 </div>
 <!-- End of Page content -->
 <%include file="footer.html" />

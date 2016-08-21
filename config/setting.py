@@ -8,7 +8,7 @@ from config.urls import *
 # import os
 
 # Debug : True or False
-web.config.debug = True
+web.config.debug = False
 
 # render = web.template.render("templates/")
 render = render_mako(

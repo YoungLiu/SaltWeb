@@ -20,6 +20,7 @@ class Dashboard:
         #print sData
         #print "ShowName: " + ShowName
 
+        # construct the data of dashboard
         LocalData = {
             'uptime': 2016,
             'ip': "This is a test IP",

@@ -14,63 +14,33 @@ function createXmlHttp() {
     return xmlHttp;
 }
 
-function submitForm(formId) {
+function editTemplate(filename, filecontent) {
+    document.getElementById('editModalLabel').value = filename;
+    filecontent = filecontent.replace(/ /g, "\r\n")
+    document.getElementById('editModalContent').value = filecontent;
+}
+
+function addTemplate(){
+    filename = document.getElementById('editModalLabel').value
+    filecontent = document.getElementById('editModalContent').value
     var xmlHttp = createXmlHttp();
     if (!xmlHttp) {
         alert("您的浏览器不支持AJAX！");
         return 0;
     }
-    // 定义IP匹配规则
-    var ipExp = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
-    // 定义提交过来的数据
-    //var F = document.hostForm
-    var F = document.getElementById(formId);
-    var devicename = F.devicename.value
-    var deviceip = F.deviceip.value
-    var devicetype = F.devicetype
-    var devicetype = devicetype.options[devicetype.selectedIndex].value
-
-    if (devicename.value == '') {
-        alert('请输入主机名！');
-        devicename.focus();
-        return false;
-    }
-    if (deviceip == '') {
-        alert('请输入deviceIP地址！');
-        deviceip.focus();
-        return false;
-    }
-    if (deviceip.match(ipExp) == null) {
-        alert('deviceIP地址不合法！');
-        deviceip.focus();
-        return false;
-    }
-
-    var e = document.getElementById(formId);
-    var url = e.action;
-    var inputs = e.elements;
-    var postData = "devicename=" + devicename + "&deviceip=" + deviceip + "&devicetype=" + devicetype;
+    var url = "/hosts/template/edit";
+    var postdata = "templatename=" + filename + "&templatecontent=" + filecontent;
     xmlHttp.open("POST", url, true);
     xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xmlHttp.send(postData);
+    xmlHttp.send(postdata);
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
             //tip.innerHTML = xmlHttp.responseText;
             var PostAnswer = xmlHttp.responseText;
-            if (PostAnswer == "Add.True")   //跳转到主机管理界面
+            if (PostAnswer == "Edit.True")
             {
                 alert("添加成功！");
-                window.location.href = "/hosts";
-            }
-            else if (PostAnswer == "Edit.True")   //跳转到主机管理界面
-            {
-                alert("修改成功！");
-                window.location.href = "/hosts";
-            }
-            else if (PostAnswer == "HostnameError") {
-                alert("主机名冲突！");
-                hostname.focus();
-                return false;
+                window.location.href = "/hosts/template";
             }
             else if (PostAnswer == "Error") {
                 alert("貌似服务器出错了噢(┬＿┬)！");
@@ -88,10 +58,6 @@ function submitForm(formId) {
     }
 }
 
-function resetForm() {
-    document.getElementById('hostForm').reset();
-    document.getElementById('devicename').focus();
-}
 
 // hosts页面按照条件刷选显示
 function onSearch(selectID, row) {//js函数开始

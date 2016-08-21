@@ -16,6 +16,8 @@ urls = (
     '/hosts/?', 'view.hosts.Index',
     '/hosts/add/?', 'view.hosts.Add',
     '/hosts/edit', 'view.hosts.Edit',
+    '/hosts/template', 'view.hosts.Template',
+    '/hosts/template/edit', 'view.hosts.EditTemplate',
     '/hosts/redis/?', 'view.redisAdmin.Index',
     '/hosts/redis/add', 'view.redisAdmin.Add',
     '/hosts/redis/edit', 'view.redisAdmin.Edit',

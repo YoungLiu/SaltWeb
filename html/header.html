@@ -9,7 +9,6 @@
 				欢迎您，<b>${ShowName}</b>！
 				<span>|</span> <a href="/users/edit?id=${uid}">设置</a>
 				<span>|</span> <a href="/logout">退出</a><br />
-				<small>您有<a href="#" class="high"><b>3</b>条信息</a></small>
 			</div>
 			<!-- End of Top navigation -->
 
@@ -25,11 +24,11 @@ def curMenu(curM,curName):
 <nav id="menu">
     <ul class="sf-menu">
         <li ${curMenu(curM,'dashboard')}><a href="/dashboard">控制中心</a></li>
-        <li ${curMenu(curM,'hosts')}><a href="/hosts">消息总线</a>
+        <li ${curMenu(curM,'hosts')}><a href="/hosts">服务管理</a>
             <ul>
                 <li class="secondMenu"><a href="/hosts">Device实例</a></li>
                 <li class="secondMenu"><a href="/hosts/add">添加Device</a></li>
-                <li class="secondMenu"><a href="/hosts/delete">删除Device</a></li>
+                <li class="secondMenu"><a href="/hosts/template">模板管理</a></li>
             </ul>
         </li>
         <li ${curMenu(curM,'users')}><a href="/users">用户</a>

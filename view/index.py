@@ -58,7 +58,7 @@ def genSession(SID, Username, ShowName, LastIP, LastLocation, LastDate, Token, L
         session.Lstat = '未知'
     # 获取客户端信息
     # print 'HTTP_ENV: '
-    # print web.ctx.environ #来源地址
+    print web.ctx.environ #来源地址
     # print 'HTTP_REFERER: '
     # print web.ctx.env.get('HTTP_REFERER', 'http://google.com')
     # LoginHost = web.ctx.ip #这两种方法都能获取到客户端IP
@@ -111,8 +111,7 @@ def genSession(SID, Username, ShowName, LastIP, LastLocation, LastDate, Token, L
     # 1.如果用户登录成功，就会从数据库获取上次登录的时间和IP，并写入session，然后立马把本次登录的IP和时间更新到数据库
     # 2.还有一种方法就是用户登录时把本次登录的时间和IP写入session而先不动数据库里的记录，直到用户执行正常退出操作时再把session里存储的本次登录的信息写入数据库
     # 3.第1个方法和第2个方法记录的数据是相反的，为什么不用第2种呢，因为万一用户不是正常退出呢，那数据库就不会更新本次登录的信息，所以...
-    # By Luxiaok 2014年4月7日 22:49:00
-    # 登录成功,这里执行DB操作应该要有异常处理的
+    # 这里执行DB操作是应该要有异常处理的!
     # return True
 
 
@@ -168,11 +167,8 @@ class Login:
                 # 如果数据库里存储的token状态为no，即用户已经正常退出，会话无效了，那么清除本地cookies
                 web.setcookie('Username', '88888888', -1)
                 web.setcookie('Token', '88888888', -1)
-        # if getLogin():
-        #     # SID = getLogin()['SID']
-        #     ShowName = getLogin()['ShowName']
-        #     print "ShowName: " + ShowName
-        #     return render.dashboard(ShowName=ShowName)
+        if getLogin():
+            return web.seeother("/dashboard")
         else:
             # return web.seeother("/login")
             return render.login()
