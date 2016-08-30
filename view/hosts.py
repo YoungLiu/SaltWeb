@@ -8,11 +8,15 @@ from main import *
 # 获取适配hosts的select选项菜单值
 def getOptions():
     sd = {'type': []}
-    sd['type'].append({"value": "JobManager"})
-    sd['type'].append({"value": "RedisData"})
-    sd['type'].append({"value": "LogManager"})
-    sd['type'].append({"value": "AuthManager"})
-    sd['type'].append({"value": "ApiGateway"})
+    path = "/srv/salt/"
+    try:
+        # 扫面当前salt file server内部的文件
+        g = glob.glob(path + 'template_*')
+        for filename in g:
+            sd['type'].append({"value": filename})
+    except Exception, e:
+        print Exception, ":", e
+        return "Error"
     return sd
 
 

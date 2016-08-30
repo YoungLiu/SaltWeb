@@ -26,6 +26,7 @@ urls = (
     '/monitor/redis', 'view.monitor.M_Redis',
     '/monitor/mysql', 'view.monitor.M_MySQL',
     '/monitor/traffic', 'view.monitor.M_Traffic',
+    '/salt/minions', 'view.saltAdmin.Minions',
     '/salt/status', 'view.saltAdmin.Status',
     '/salt/cmd', 'view.saltAdmin.Cmd',
     '/test', 'view.index.Test',

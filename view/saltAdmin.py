@@ -173,3 +173,13 @@ class Cmd:
             #return "<b>CMD:</b> %s <b>Arg:</b> %s <b>Target:</b> %s" % ( c.fun, c.arg, c.tgt )
         #print "r = %s" % r
         return r
+
+class Minions:
+    @Check_Login
+    def GET(self):
+        sData = getLogin()
+        SID = sData['SID']
+        ShowName = sData['ShowName']
+        # get minions information from salt-api
+
+        return render.salt_minions(ShowName=ShowName, uid=SID)

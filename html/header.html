@@ -31,6 +31,16 @@ def curMenu(curM,curName):
                 <li class="secondMenu"><a href="/hosts/template">模板管理</a></li>
             </ul>
         </li>
+        <li ${curMenu(curM,'salt')}><a href="/salt">SaltStack</a>
+            <ul>
+                <li><a href="/salt/minions">主机管理</a></li>
+                <li><a href="/salt/cmd">命令下发</a></li>
+                <li><a href="/salt/config">配置管理</a></li>
+                <li><a href="/salt/key">认证管理</a></li>
+                <li><a href="/salt/file">文件分发</a></li>
+                <li><a href="/salt/release">发布管理</a></li>
+            </ul>
+        </li>
         <li ${curMenu(curM,'users')}><a href="/users">用户</a>
             <ul>
                 <li><a href="/users">用户管理</a></li>
@@ -45,25 +55,6 @@ def curMenu(curM,curName):
                 <li><a href="#">BUS API</a></li>
             </ul>
         </li>
-        <li ${curMenu(curM,'salt')}><a href="/salt">SaltStack</a>
-            <ul>
-                <li><a href="/salt/admin">主机管理</a>
-                    <ul>
-                        <li><a href="/salt/service">服务管理</a></li>
-                        <li><a href="/salt/user">用户管理</a></li>
-                        <li><a href="/salt/pkg">软件管理</a></li>
-                        <li><a href="/salt/system">系统管理</a></li>
-                    </ul>
-                </li>
-                <li><a href="/salt/status">实时状态</a></li>
-                <li><a href="/salt/cmd">命令下发</a></li>
-                <li><a href="/salt/config">配置管理</a></li>
-                <li><a href="/salt/key">认证管理</a></li>
-                <li><a href="/salt/file">文件分发</a></li>
-                <li><a href="/salt/release">发布管理</a></li>
-            </ul>
-        </li>
-        <li ${curMenu(curM,'test')}><a href="/test">测试页面</a></li>
     </ul>
 </nav>
 
