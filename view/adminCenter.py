@@ -8,6 +8,7 @@ import salt.key
 import salt.version
 
 from main import *
+from saltapi import saltwrapper
 
 
 # 管理中心
@@ -59,9 +60,14 @@ class IndexData:
         keys_ok = len(K['minions'])
         keys_rej = len(K['minions_rejected'])
         keys_pre = len(K['minions_pre'])
-        local = salt.client.LocalClient()
-        rt = local.cmd('*','test.ping',timeout=1)
-        minions_online = len(rt)
+        saltuser = saltwrapper.user_session()
+        saltuser.set_auth_token()
+        testJsonData = saltwrapper.test_target(saltuser.auth_token, "*")
+        dictMinion = testJsonData["return"][0]
+        minions_online = 0
+        for minion in dictMinion:
+            if dictMinion[minion] == True:
+                minions_online += 1
         sm = {'keys_ok':keys_ok, 'keys_rej':keys_rej, 'keys_pre':keys_pre, 'online':minions_online, 'offline':keys_ok-minions_online}
         return sm
 
@@ -72,45 +78,3 @@ class IndexData:
         web.header('content-type','text/json')
         return json.dumps(rt_data)
 
-# 选项管理
-class Options:
-    def GET(self):
-        if getLogin():
-            sData = getLogin()
-            SID = sData['SID']
-            ShowName = sData['ShowName']
-            #print sData
-            #print "ShowName: " + ShowName
-            #return render.options(ShowName=ShowName,uid=SID)
-            g = db.query('''select * from options order by type,value''')
-            #op = db.query('''select * from options where type="option"''')
-            OpsData = []
-            SelectType = []
-            for i in g:
-                if str(i.type) == 'option':
-                    SelectType.append({'value':i.value,'comment':i.comment})
-                OpsData.append({'id':i.id,'type':i.type,'value':i.value,'comment':i.comment,'status':i.status})
-            #for i in op:
-            #    SelectType.append({'value':i.value,'comment':i.comment})
-            return render.options(ShowName=ShowName,uid=SID,OpsData=OpsData,SelectType=SelectType)
-        else:
-            web.setcookie('HTTP_REFERER', web.ctx.fullpath, 86400)
-            return web.seeother("/login")
-
-    def POST(self):
-        if getLogin() is False:
-            web.ctx.status = '401 Unauthorized'
-            return '401 - Unauthorized\n'
-        i = web.input()
-        OpsID = i.id
-        OpsType = i.type
-        OpsValue = i.value
-        OpsComment = i.comment
-        OpsStatus = i.status
-        #print "Ops: " + OpsType + OpsValue
-        if OpsID == "none":
-            db.query('''insert into options(type,value,comment,status)values("%s","%s","%s","%s")''' % (OpsType,OpsValue,OpsComment,OpsStatus))
-        else:
-            db.query('''update options set type="%s",value="%s",comment="%s",status="%s" where id="%s"''' % (OpsType,OpsValue,OpsComment,OpsStatus,OpsID))
-        return web.seeother("/admin/options")
-        #return render('alert("操作成功！");window.location.href="/admin/options";')

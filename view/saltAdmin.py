@@ -2,6 +2,7 @@
 #-*- coding:utf-8 -*-
 from main import *
 import salt
+from saltapi import saltwrapper
 
 # salt_status
 class Status:
@@ -181,5 +182,13 @@ class Minions:
         SID = sData['SID']
         ShowName = sData['ShowName']
         # get minions information from salt-api
-
-        return render.salt_minions(ShowName=ShowName, uid=SID)
+        saltuser = saltwrapper.user_session()
+        saltuser.set_auth_token()
+        minions = saltwrapper.get_minions(saltuser.auth_token)
+        getMinions= []
+        for minion in minions:
+            tmp = {"hostname": minion, 'kernel': minions[minion]["kernel"], 'mem_total': minions[minion]["mem_total"], \
+                   'num_cpus': minions[minion]["num_cpus"], 'oscodename': minions[minion]["oscodename"], 'osarch': minions[minion]["osarch"]}
+            getMinions.append(tmp)
+        print getMinions
+        return render.minions(ShowName=ShowName, uid=SID, getMinions=getMinions)

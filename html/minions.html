@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh">
+<head>
+    <meta charset="utf-8"/>
+    <title>SaltStack Admin - 主机管理</title>
+    <meta name="description" content="YoungLiu"/>
+    <meta name="keywords" content="YoungLiu"/>
+    <!-- We need to emulate IE7 only when we are to use excanvas -->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+    <![endif]-->
+    <!-- Favicons -->
+    <link rel="shortcut icon" type="image/png" href="/static/images/favicons/favicon.png"/>
+    <link rel="icon" type="image/png" href="/static/images/favicons/favicon.png"/>
+    <link rel="apple-touch-icon" href="/static/images/favicons/apple.png"/>
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="/static/css/main.css" type="text/css"/>
+    <!-- Your Custom Stylesheet -->
+    <link rel="stylesheet" href="/static/css/custom.css" type="text/css"/>
+    <!-- 用户列表css样式 -->
+    <link rel="stylesheet" href="/static/css/tables.css" type="text/css"/>
+    <!-- jQuery with plugins -->
+    <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+    <!--
+    Could be loaded remotely from Google CDN :
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    -->
+    <!-- Superfish Navigation -->
+    <script type="text/javascript" src="/static/js/jquery.superfish.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.supersubs.min.js"></script>
+    <!-- 删除device确认函数 -->
+    <script type="text/javascript" src="/static/js/hosts.js"></script>
+    <!-- 顶部导航和底部隐藏的导航的特效输出 -->
+    <script type="text/javascript" src="/static/js/nav.show.menu.js"></script>
+</head>
+<body>
+<!-- Header -->
+<%include file="header.html" args="curM='salt',ShowName=ShowName,uid=uid" />
+<!-- End of Header -->
+<!-- Page title -->
+<div id="pagetitle">
+    <div class="wrapper">
+        <h1>主机管理</h1>
+        <!-- Quick search box -->
+        <form action="" method="get"><input class="" type="text" id="q" name="q"/></form>
+    </div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <div>
+            <table width=100%>
+                <tr>
+                    <td><h3>主机列表</h3></td>
+                </tr>
+            </table>
+            <table class="datalist" id="minionlist">
+                <thead>
+                <tr>
+                    <th>HostName</th>
+                    <th>HostKernel</th>
+                    <th>HostMemory</th>
+                    <th>HostCpus</th>
+                    <th>HostOS</th>
+                    <th>HostOSArch</th>
+                    <th>HostOPS</th>
+                </tr>
+                </thead>
+                <tbody>
+                % for i in getMinions:
+                <%
+                hostname = i["hostname"]
+                hostkernel = i["kernel"]
+                hostmem = i["mem_total"]
+                hostcpu = i["num_cpus"]
+                hostosname = i["oscodename"]
+                hostosarch = i["osarch"]
+                print hostname
+                %>
+                <tr class="dataline">
+                    <td>${hostname}</td>
+                    <td>${hostkernel}</td>
+                    <td>${hostmem}</td>
+                    <td>${hostcpu}</td>
+                    <td>${hostosname}</td>
+                    <td>${hostosarch}</td>
+                    <td><a href="/hosts/del?pid=${hostname}" onClick="return isDel()">删除</a> | <a
+                            href="/hosts/edit?pid=${hostname}">编辑</a> | <a href="/hosts/admin?pid=${hostname}">管理</a></td>
+                </tr>
+                % endfor
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>HostName</th>
+                    <th>HostKernel</th>
+                    <th>HostMemory</th>
+                    <th>HostCpus</th>
+                    <th>HostOS</th>
+                    <th>HostOSArch</th>
+                    <th>HostOPS</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->
+<%include file="footer.html" />
+</body>
+</html>
